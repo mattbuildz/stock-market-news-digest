@@ -1,0 +1,33 @@
+# =====================================================================
+#  WHITELIST - nothing goes into the repo by default.
+#  Only the pipeline scripts, examples, README and requirements are public.
+#  Data, docs, local notes and old versions stay on disk.
+#  A new file or folder stays out until it is deliberately let in.
+# =====================================================================
+/*
+!/.gitignore
+!/README.md
+!/requirements.txt
+!/pipeline/
+!/examples/
+
+# --- Still blocked inside the folders that are let in ---
+# Python cache and macOS junk
+__pycache__/
+*.pyc
+.DS_Store
+# Stray data: scripts resolve paths from the working directory,
+# so a dump can land inside pipeline/ - these rules catch it
+*.json
+*.jsonl
+*.html
+# ...except the example outputs, which are published on purpose
+# (metadata, headlines and decisions only - no article text)
+!/examples/*.json
+# Secrets: none of these files exist today, the rules are a safety net
+.env
+.env.*
+*.key
+*.pem
+KEY*.txt
+*secret*
