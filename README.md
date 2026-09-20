@@ -69,12 +69,53 @@ Requires Python 3.14+.
 pip install -r requirements.txt
 ```
 
-Set these environment variables before running anything (never put real values in this file or in any committed file):
+### API keys — where to get them
+
+| Variable | Where |
+|---|---|
+| `FINNHUB_API_KEY` | [Finnhub](https://finnhub.io/) → sign up → dashboard → API key (free tier is enough to start) |
+| `ANTHROPIC_API_KEY` | [Anthropic Console](https://console.anthropic.com/) → API Keys → Create key |
+
+Never put real key values in this file, in the repo, or in screenshots.
+
+### API keys — this terminal only
+
+**Mac / Linux**
 
 ```bash
 export FINNHUB_API_KEY=your_key_here
 export ANTHROPIC_API_KEY=your_key_here
 ```
+
+**Windows (PowerShell)**
+
+```powershell
+$env:FINNHUB_API_KEY="your_key_here"
+$env:ANTHROPIC_API_KEY="your_key_here"
+```
+
+These last until you close the terminal.
+
+### API keys — permanent (survive new terminals)
+
+**Mac / Linux** — add the same `export …` lines to `~/.zshrc` (zsh) or `~/.bashrc` (bash), save, then open a new terminal or run `source ~/.zshrc`.
+
+**Windows** — set user environment variables once (they apply to **new** PowerShell / CMD / IDE windows, not the one already open):
+
+1. Start → search **Edit environment variables for your account** (or *Edit the system environment variables* → **Environment Variables…**).
+2. Under *User variables for …* → **New…** → Variable name `FINNHUB_API_KEY`, Variable value = your key → OK. Repeat for `ANTHROPIC_API_KEY`.
+3. Close every open terminal and IDE window, then open them again (so they reload the environment).
+
+Or in PowerShell (user scope — same effect; still needs a **new** terminal afterward):
+
+```powershell
+[System.Environment]::SetEnvironmentVariable("FINNHUB_API_KEY", "your_key_here", "User")
+[System.Environment]::SetEnvironmentVariable("ANTHROPIC_API_KEY", "your_key_here", "User")
+```
+
+Check in a new PowerShell window: `echo $env:FINNHUB_API_KEY` (should print the key; do not screenshot or paste that output into chats/repos).
+
+### Run the scripts
 
 Run from the project root — the scripts resolve paths relative to the working directory:
 
