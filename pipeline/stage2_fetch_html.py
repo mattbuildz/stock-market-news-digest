@@ -1,22 +1,15 @@
 from urllib.robotparser import RobotFileParser
 import urllib.request
 
-
-from base64 import encode
-from typing import Any
-
 import requests
 
 import json
 import pprint
 import os
 import time
-import glob
 from datetime import datetime
 
 from urllib.parse import urlparse
-
-from urllib3.exceptions import HostChangedError
 
 with open("data/news_2026-07-15_2026-07-22.json", "r", encoding="utf-8") as f:
     news_items = json.load(f)
@@ -38,39 +31,40 @@ urllib.request.install_opener(opener)
 robot_cache = {}
 index = []
 
-entry = {}
+
+# Previous index.json -> {number: entry}, used to skip re-downloads.
+if os.path.exists("data/html/index.json"):
+    old_by_number = {}
+
+    with open("data/html/index.json", "r", encoding="utf-8") as f:
+        old_list = json.load(f)
+    for wpis in old_list:
+        
+        old_by_number[wpis["number"]] = wpis
 
 
-for number, news in enumerate(news_items[:30], start=1):
+else:
+    old_by_number = {} #First run: no index on disk yet
+
+
+for number, news in enumerate(news_items[:90], start=1):
     url = news["url"]
-    found_files = glob.glob(f"data/html/{number:03d}_*.html")
 
-    if found_files != []:
-        #print(glob.glob(f"data/html/{number:03d}_*.html"))
-        #print(found_files)
-        file_name = os.path.basename(found_files[0])
-        host = file_name.removeprefix(f"{number:03d}_").removesuffix(".html")
+    old = old_by_number.get(number)
 
 
-        entry = {
-            "number":number, 
-            "ticker":news["ticker"],
-            "headline":news["headline"],
-            "source":news["source"],
-            "url_finnhub":url,
-            "host":host,
-            "status":"FROM_DISK",
-            "html_file":file_name,
-            "fetched_at":datetime.now().isoformat()}
-
-        index.append(entry)
-
-
+    # Reuse the previous index entry (keeps real status/url_final).
+    # Skip download + sleep — otherwise a second run would wipe metadata.
+    if old is not None:
+       
+        index.append(old)
+            
         continue          #continue here, because otherwise time.sleep(4) at the bottom would run
- 
+    
 
     else:
-        print("not on disk, downloading")
+        print(number)
+        print("no previous index entry, downloading")
 
         try:
             r = session.get(url, timeout = 15)
@@ -152,12 +146,3 @@ with open(f"data/html/index.json", "w", encoding="utf-8") as f:
 
 
 #pprint.pprint(index)
-
-
-
-
-
-
-
-
-
