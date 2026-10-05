@@ -31,3 +31,41 @@ The index that stage 2 writes after fetching the first 30 news items for AVGO (n
 3. **The important news is exactly what fails.** Stage 1 kept 4 of these 30 items (#2, #21, #25, #30). None of them produced an article: three hit the Yahoo consent screen and one got a 403. All 18 article pages belong to news that stage 1 rejected. Stage 2 fetched them anyway, because this test takes the first 30 items and is not yet connected to stage 1 decisions.
 
 `url_final` of the consent pages was shortened: the session IDs from the original requests were removed.
+
+## A later run: 300 pages
+
+Not published as a file, only summarised here. Stage 2 fetched the first 300 news items (all 186 AVGO items and the first 114 AMD items, not only the ones stage 1 kept), then the stage 3 rules were applied offline: page title, real host and at least 500 characters of extracted text. Article text and headlines are not published.
+
+| Result | Pages |
+|---|---:|
+| real article | **229** (76%) |
+| blocked page (title like "Access to this page has been denied") | 23 |
+| never downloaded (21 refused by robots.txt, 2 timeouts) | 23 |
+| text shorter than 500 characters | 10 |
+| HTTP 202 (empty answer) | 6 |
+| HTTP 403 | 4 |
+| HTTP 404 | 4 |
+| no extractable text | 1 |
+
+Text length of the 229 articles: median 3,453 characters, mean 3,777, 90th percentile 5,374, longest 23,280. At about 4 characters per token that is roughly 940 tokens on average.
+
+| Host (after redirect) | Pages | Real articles |
+|---|---:|---:|
+| finance.yahoo.com | 90 | 80 |
+| 247wallst.com | 54 | 54 |
+| trefis.com | 30 | 30 |
+| benzinga.com | 26 | 24 |
+| fool.com | 21 | 21 |
+| seekingalpha.com | 17 | 1 |
+| stocktwits.com | 9 | 9 |
+| barchart.com | 6 | 0 |
+| other hosts | 24 | 10 |
+| never downloaded | 23 | 0 |
+
+| Ticker | Pages | Real articles | Items stage 1 kept | Of those, a real article |
+|---|---:|---:|---:|---:|
+| AVGO | 186 | 143 (77%) | 30 | 23 (77%) |
+| AMD (first 114) | 114 | 86 (75%) | 37 | 24 (65%) |
+| both | 300 | 229 (76%) | 67 | 47 (70%) |
+
+The sample is not representative: MU, CRDO and SNOW were not fetched, and the pages were fetched in the order of the news file, not by importance.

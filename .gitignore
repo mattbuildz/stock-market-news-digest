@@ -11,6 +11,7 @@
 !/LICENSE
 !/pipeline/
 !/examples/
+!/assets/
 
 # --- Still blocked inside the folders that are let in ---
 # Python cache and macOS junk
