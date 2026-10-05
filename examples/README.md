@@ -22,7 +22,7 @@ The index that stage 2 writes after fetching the first 30 news items for AVGO (n
 | TheStreet block | 1 | status 403, empty page |
 | Barchart empty response | 2 | status 202, 1 KB, no title |
 
-"Article page" means the request reached the article's own page. Whether the text is complete or cut by a paywall is checked in stage 3–4 ([issue #4](https://github.com/itsamattbuild/stock-market-news-digest/issues/4)).
+"Article page" means the request reached the article's own page. Whether the text is complete or cut by a paywall is checked in stage 3–4 ([issue #4](https://github.com/mattbuildz/stock-market-news-digest/issues/4)).
 
 ### What this shows
 

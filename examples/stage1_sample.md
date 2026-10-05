@@ -71,4 +71,4 @@ The previous prompt (selection instead of classification) kept 4% of one batch a
 
 Overall the manual review found **~4 missed facts out of 530 rejections** and **~13 unnecessary KEEPs out of 180**. The errors lean towards keeping too much, which is the cheaper direction: an extra news item costs a few tokens later, a missed one is lost.
 
-There is no hand-labeled test set yet, so these numbers are indications, not a measured recall or precision — see [issue #6](https://github.com/itsamattbuild/stock-market-news-digest/issues/6).
+There is no hand-labeled test set yet, so these numbers are indications, not a measured recall or precision — see [issue #6](https://github.com/mattbuildz/stock-market-news-digest/issues/6).
