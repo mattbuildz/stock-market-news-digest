@@ -47,7 +47,7 @@ else:
     old_by_number = {} #First run: no index on disk yet
 
 
-for number, news in enumerate(news_items[:90], start=1):
+for number, news in enumerate(news_items[:339], start=1):
     url = news["url"]
 
     old = old_by_number.get(number)
